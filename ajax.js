@@ -13,16 +13,22 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   step3456Button.addEventListener('click', function() {
+    var p = document.createElement("p");
+    var section3456 = document.querySelector('#step3456');
     $.ajax({
-      url: 'http://first-ajax-api.herokuapp.com/ping',
+      url: 'http://first-ajax-api.herokuapp.com/pong',
       method: 'GET',
       data: {},
       dataType: 'text'
+
     }).done(function(responseData) {
-      console.log(responseData);
-      var p = document.createElement("p");
-      p.innerText = responseData;
-      document.querySelector('#step3456').append(p);
+        console.log(responseData);
+        p.innerText = responseData;
+        section3456.append(p);
+
+    }).fail(function() {
+        p.innerText = "Sorry about that! Won't happen again.";
+        section3456.append(p);
     })
 
 
