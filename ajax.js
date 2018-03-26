@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var step3456Button = document.querySelector('#step3456button');
   var step7Button = document.querySelector('#step7button');
   var step8Button = document.querySelector('#step8button');
+  var step8Button2 = document.querySelector('#step8button2');
   var step9Button = document.querySelector('#step9button');
 
   var section3456 = document.querySelector('#step3456');
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
   step3456Button.addEventListener('click', function() {
     var p = document.createElement("p");
     $.ajax({
-      url: 'http://first-ajax-api.herokuapp.com/ping',
+      url: 'http://first-ajax-api.herokuapp.com/pong',
       method: 'GET',
       data: {},
       dataType: 'text'
@@ -43,9 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
         p.innerText = responseData;
         section3456.append(p);
 
-    }).fail(function() {
+    }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log("The request failed!");
-        p.innerText = "Sorry about that! Won't happen again.";
+        p.innerText = jqXHR.responseText;
         section3456.append(p);
 
     }).always(function() {
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     $.ajax({
       url: 'http://first-ajax-api.herokuapp.com/count',
       method: 'GET',
-      data: {},
+      data: {amount: 5}, // max seems to be 5; increases the count by the amount
       dataType: 'text'
 
     }).done(function(responseData) {
@@ -70,12 +71,28 @@ document.addEventListener("DOMContentLoaded", function() {
       url: 'http://first-ajax-api.herokuapp.com/time',
       method: 'GET',
       data: {timezone: 'America/Toronto'},
-      // data: {},
       dataType: 'text'
 
     }).done(function(responseData) {
       section8Paragraph.innerText = responseData;
     });
+  });
+
+  step8Button2.addEventListener('click', function() {
+    var timezone = prompt("Please enter the timezone", "e.g. 'America/Toronto'");
+
+    $.ajax({
+      url: 'http://first-ajax-api.herokuapp.com/time',
+      method: 'GET',
+      data: {timezone: timezone},
+      dataType: 'text'
+
+    }).done(function(responseData) {
+      section8Paragraph.innerText += timezone + ": " + responseData + "\n";
+
+    }).fail(function() {
+      section8Paragraph.innerText += timezone + " is not a valid time zone!\n";
+    })
   });
 
   step9Button.addEventListener('click', function() {
