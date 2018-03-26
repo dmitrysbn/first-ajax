@@ -29,7 +29,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }).fail(function() {
         p.innerText = "Sorry about that! Won't happen again.";
         section3456.append(p);
-    })
+
+    }).always(function() {
+      console.log("Hey, the request finished!");
+    });
 
 
   })
